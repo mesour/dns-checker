@@ -47,7 +47,7 @@ class DnsRecord implements IDnsRecord
 		if ($type === DnsRecordType::A) {
 			$content = $record['ip'];
 		} elseif ($type === DnsRecordType::AAAA) {
-			$content = $record['ipv6'];
+			return new AaaaDnsRecord($type, $record['host'], $record['ipv6'], $record['ttl']);
 		} elseif (in_array($type, [DnsRecordType::CNAME, DnsRecordType::NS, DnsRecordType::PTR], true)) {
 			$content = $record['target'];
 		} elseif ($type === DnsRecordType::TXT) {

@@ -2,7 +2,7 @@
 
 namespace Mesour\DnsCheckerTests;
 
-use Mesour\DnsChecker\DnsRecord;
+use Mesour\DnsChecker\AaaaDnsRecord;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
@@ -18,7 +18,7 @@ class AaaaRecordTest extends BaseTestCase
 
 		Assert::false($records->isEmpty());
 		Assert::count(1, $records);
-		Assert::type(DnsRecord::class, $records[0]);
+		Assert::type(AaaaDnsRecord::class, $records[0]);
 		Assert::same($this->getExpectedRows(), $records->toArray());
 	}
 

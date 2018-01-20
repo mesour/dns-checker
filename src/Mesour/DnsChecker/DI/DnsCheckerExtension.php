@@ -2,6 +2,7 @@
 
 namespace Mesour\DnsChecker\DI;
 
+use Mesour\DnsChecker\Diffs\DnsRecordSetDiffFactory;
 use Mesour\DnsChecker\DnsChecker;
 use Mesour\DnsChecker\Providers\DnsRecordProvider;
 use Mesour\DnsChecker\Providers\IDnsRecordProvider;
@@ -16,6 +17,9 @@ class DnsCheckerExtension extends CompilerExtension
 
 		$container->addDefinition($this->prefix('dnsChecker'))
 			->setFactory(DnsChecker::class);
+
+		$container->addDefinition($this->prefix('dnsRecordSetDiffFactory'))
+			->setFactory(DnsRecordSetDiffFactory::class);
 
 		$container->addDefinition($this->prefix('dnsRecordProvider'))
 			->setType(IDnsRecordProvider::class)

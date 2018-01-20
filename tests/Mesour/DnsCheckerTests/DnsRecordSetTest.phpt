@@ -2,6 +2,7 @@
 
 namespace Mesour\DnsCheckerTests;
 
+use Mesour\DnsChecker\AaaaDnsRecord;
 use Mesour\DnsChecker\DnsRecord;
 use Mesour\DnsChecker\DnsRecordType;
 use Mesour\DnsChecker\MxRecord;
@@ -24,14 +25,14 @@ class DnsRecordSetTest extends BaseTestCase
 		$nsDnsRecord = new DnsRecord('NS', 'example.com', 'ns3.google.com');
 		Assert::true($records->hasRecord($nsDnsRecord));
 
-		$dnsRecord = new DnsRecord('AAAA', 'example.com', '2a00:1450:4014:800::200e');
+		$dnsRecord = new AaaaDnsRecord('AAAA', 'example.com', '2a00:1450:4014:800::200e');
 		Assert::true($records->hasRecord($dnsRecord));
 
 		$record = $records->getMatchingRecord($dnsRecord);
 		Assert::type(DnsRecord::class, $record);
 		Assert::same($this->getMatchingRecord(), $record->toArray());
 
-		$notExistDnsRecord = new DnsRecord('AAAA', 'google.com', '1111:1450:5555:800::200e');
+		$notExistDnsRecord = new AaaaDnsRecord('AAAA', 'google.com', '1111:1450:5555:800::200e');
 		Assert::false($records->hasRecord($notExistDnsRecord));
 
 		Assert::true($records->hasSameRecords([$nsDnsRecord, $dnsRecord]));

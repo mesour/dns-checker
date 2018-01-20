@@ -5,3 +5,4 @@
 /tests/log
 /tests/tmp
 /tests/environment.php
+/tests/Mesour/DnsCheckerTests/output
