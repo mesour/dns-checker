@@ -81,7 +81,8 @@ $request->addFilter('example.com');
 $request->addFilter('www.example.com', DNS_CNAME);
 // ... more lines
 
-/** @var \Mesour\DnsChecker\DnsRecordSet */
+/** @var \Mesour\DnsChecker\DnsChecker $checker */
+/** @var \Mesour\DnsChecker\DnsRecordSet $records */
 $records = $checker->getDnsRecordSetFromRequest($request);
 ```
 
