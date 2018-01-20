@@ -76,7 +76,7 @@ Run command `vendor/bin/tester tests/ -s -c tests/php.ini --colors`
 For your own tests can use `Mesour\DnsProvider\StaticDnsRecordProvider`. Values are as return values of [PHP function dns_get_record()](http://php.net/manual/en/function.dns-get-record.php).
 
 ```php
-$provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider([
+$provider = new \Mesour\DnsChecker\Providers\StaticDnsRecordProvider([
 	[
     	'host' => 'example.com',
     	'class' => 'IN',
