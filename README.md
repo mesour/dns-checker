@@ -2,6 +2,10 @@
 
 - [Author](http://mesour.com)
 
+- DNS checker written in PHP for check and compare real DNS records for domain.
+
+- Problem with PHP warning: `dns_get_record(): A temporary server error occurred.` is resolved.
+
 # Install
 
 - With [Composer](https://getcomposer.org)

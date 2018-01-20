@@ -1,6 +1,6 @@
 {
   "name": "mesour/dns-checker",
-  "description": "Mesour DNS checker.",
+  "description": "DNS checker written in PHP for check and compare real DNS records for domain.",
   "license": ["BSD-3-Clause","GPL-3.0-or-later"],
   "keywords": ["DNS","dns checker"],
   "authors": [{
