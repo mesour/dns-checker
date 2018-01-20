@@ -1,0 +1,25 @@
+{
+  "name": "mesour/dns-checker",
+  "description": "Mesour DNS checker.",
+  "license": ["BSD-3-Clause","GPL-2.0","GPL-3.0"],
+  "keywords": ["DNS","dns checker"],
+  "authors": [{
+      "name": "Matouš Němec",
+      "homepage": "http://mesour.com"
+  }],
+  "require": {
+      "php": ">=7.0"
+  },
+  "require-dev": {
+      "tracy/tracy": "~2.3.0",
+      "slevomat/coding-standard": "^1.0",
+      "consistence/coding-standard": "^0.10",
+      "phpstan/phpstan": "^0.7.0",
+      "nette/bootstrap": "^2.4",
+      "nette/robot-loader": "^2.4",
+      "nette/tester": "^1.7"
+  },
+  "autoload": {
+      "classmap": ["src/"]
+  }
+}

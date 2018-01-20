@@ -1,0 +1,20 @@
+language: php
+
+php:
+    - 5.6
+    - 7.0
+    - 7.1
+    - hhvm
+
+matrix:
+    allow_failures:
+        - php: hhvm
+
+install:
+    - composer install --no-interaction --prefer-source
+
+script:
+    - vendor/bin/parallel-lint src tests
+    - vendor/bin/phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --tab-width=4 -sp src tests
+    - vendor/bin/phpstan analyse -l 7 -c phpstan.neon src tests
+    - vendor/bin/tester -p php tests/ -s -c tests/php.ini

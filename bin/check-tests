@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+<?php
+
+passthru(escapeshellarg(__DIR__ . '/../vendor/bin/tester') . ' -c tests/php.ini --colors 1 tests');

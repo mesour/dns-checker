@@ -1,0 +1,8 @@
+parameters:
+	autoload_directories:
+		- %rootDir%/../../../src
+		- %rootDir%/../../../tests
+
+	excludes_analyse:
+		- %rootDir%/../../../tests/bootstrap.php
+		- %rootDir%/../../../tests/environment.php

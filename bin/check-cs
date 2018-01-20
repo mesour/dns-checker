@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+passthru(escapeshellarg(__DIR__ . '/../vendor/bin/phpcs')
+	. ' ' . escapeshellarg('--standard=' . __DIR__ . '/../ruleset.xml')
+	. ' --extensions=php,phpt --encoding=utf-8 --tab-width=4 -sp src tests');

@@ -1,0 +1,7 @@
+.idea
+/vendor
+/composer.lock
+/examples/log
+/tests/log
+/tests/tmp
+/tests/environment.php

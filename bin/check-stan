@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+passthru(escapeshellarg(__DIR__ . '/../vendor/bin/phpstan')
+	. ' analyse -l 7 -c ' . escapeshellarg(__DIR__ . '/../phpstan.neon')
+	. ' -a ' . escapeshellarg(__DIR__ . '/../tests/increase_memory.php ') . ' src tests');
