@@ -51,7 +51,7 @@ Mesour\DnsProvider\DnsRecordSet
    |  |  ttl private => 404
 ```
 
-# Class `Mesour\DnsProvider\DnsRecordSet`
+# DnsRecordSet
 
 - Implements `\ArrayAccess`, `\Countable` and `\Iterator`.
 
@@ -66,12 +66,27 @@ Get matching DNS record:
 
 ```php
 $dnsRecord = new \Mesour\DnsProvider\Records\DnsRecord('AAAA', 'example.com', '2a00:4444:5555:6666::200e');
-$nsDnsRecord = $records->getMatchingRecord($dnsRecord);
+$nsDnsRecord = $dnsRecordSet->getMatchingRecord($dnsRecord);
 ```
 
 # Tests
 
 Run command `vendor/bin/tester tests/ -s -c tests/php.ini --colors`
+
+For your own tests can use `Mesour\DnsProvider\StaticDnsRecordProvider`. Values are as return values of [PHP function dns_get_record()](http://php.net/manual/en/function.dns-get-record.php).
+
+```php
+$provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider([
+	[
+    	'host' => 'example.com',
+    	'class' => 'IN',
+    	'ttl' => 34,
+    	'type' => 'A',
+    	'ip' => '216.58.201.78',
+    ],
+]);
+
+```
 
 # Code style
 
