@@ -1,6 +1,6 @@
 <?php
 
-namespace Mesour\DnsProvider\Providers;
+namespace Mesour\DnsChecker\Providers;
 
 interface IDnsRecordProvider
 {

@@ -2,7 +2,7 @@
 
 namespace Mesour\DnsCheckerTests;
 
-use Mesour\DnsProvider\CaaRecord;
+use Mesour\DnsChecker\CaaRecord;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
