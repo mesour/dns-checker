@@ -2,6 +2,9 @@
 
 namespace Mesour\DnsChecker\Providers;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class StaticDnsRecordProvider implements IDnsRecordProvider
 {
 

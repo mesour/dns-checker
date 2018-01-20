@@ -2,6 +2,9 @@
 
 namespace Mesour\DnsChecker;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class DnsRecordType
 {
 
@@ -19,6 +22,25 @@ class DnsRecordType
 	const SPF = 'SPF';
 	const SRV = 'SRV';
 	const TXT = 'TXT';
+
+	/**
+	 * @var int[]
+	 */
+	private static $phpValues = [
+		self::A => \DNS_A,
+		self::AAAA => \DNS_AAAA,
+		self::A6 => \DNS_A6,
+		self::CAA => \DNS_CAA,
+		self::CNAME => \DNS_CNAME,
+		self::HINFO => \DNS_HINFO,
+		self::MX => \DNS_MX,
+		self::NAPTR => \DNS_NAPTR,
+		self::NS => \DNS_NS,
+		self::PTR => \DNS_PTR,
+		self::SOA => \DNS_SOA,
+		self::SRV => \DNS_SRV,
+		self::TXT => \DNS_TXT,
+	];
 
 	/**
 	 * @return string[]
@@ -43,13 +65,14 @@ class DnsRecordType
 		];
 	}
 
-	/**
-	 * @param string $type
-	 * @return bool
-	 */
-	public static function isValid($type)
+	public static function isValid(string $type): bool
 	{
 		return in_array($type, static::getAll(), true);
+	}
+
+	public static function getPhpValue(string $type): int
+	{
+		return isset(static::$phpValues[$type]) ? static::$phpValues[$type] : \DNS_ALL;
 	}
 
 }
