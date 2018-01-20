@@ -10,6 +10,65 @@
 
 - Or download source from [GitHub](https://github.com/mesour/dns-checker/releases)
 
+# Usage
+
+1. Create instance `\Mesour\DnsChecker\Providers\DnsRecordProvider`:
+
+```php
+$provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider();
+```
+
+2. Create instance `\Mesour\DnsChecker\DnsChecker`:
+
+```php
+$checker = new \Mesour\DnsChecker\DnsChecker($provider);
+```
+
+3. Get DNS record set:
+
+```php
+$dnsRecordSet = $checker->getDnsRecordSet('example.com', DNS_A + DNS_AAAA);
+```
+
+`$dnsRecordSet` contains for example:
+
+```
+Mesour\DnsProvider\DnsRecordSet
+   dnsRecords private => array (3)
+   |  0 => Mesour\DnsProvider\MxRecord #86b8
+   |  |  priority private => 40
+   |  |  target private => "alt3.aspmx.l.example.com" (24)
+   |  |  type private => "MX" (2)
+   |  |  name private => "example.com" (11)
+   |  |  content private => "40 alt3.aspmx.l.example.com" (27)
+   |  |  ttl private => 404
+   |  1 => Mesour\DnsProvider\MxRecord #5a7b
+   |  |  priority private => 50
+   |  |  target private => "alt4.aspmx.l.example.com" (24)
+   |  |  type private => "MX" (2)
+   |  |  name private => "example.com" (11)
+   |  |  content private => "50 alt4.aspmx.l.example.com" (27)
+   |  |  ttl private => 404
+```
+
+# Class `Mesour\DnsProvider\DnsRecordSet`
+
+- Implements `\ArrayAccess`, `\Countable` and `\Iterator`.
+
+Check if exist domain record:
+
+```php
+$dnsRecord = new \Mesour\DnsProvider\Records\DnsRecord('NS', 'example.com', 'ns3.example.com');
+Assert::true($dnsRecordSet->hasRecord($dnsRecord));
+```
+
+Get matching DNS record:
+
+```php
+$dnsRecord = new \Mesour\DnsProvider\Records\DnsRecord('AAAA', 'example.com', '2a00:4444:5555:6666::200e');
+$nsDnsRecord = $records->getMatchingRecord($dnsRecord);
+```
+
 # Tests
 
 Run command `vendor/bin/tester tests/ -s -c tests/php.ini --colors`

@@ -15,34 +15,34 @@ class DnsRecordSetTest extends BaseTestCase
 
 	public function testDefault()
 	{
-		$checker = $this->createChecker($this->getDnsRows());
+		$checker = $this->createChecker($this->getDnsRecords());
 		$records = $checker->getDnsRecordSet('example.com');
 
 		Assert::false($records->isEmpty());
 		Assert::count(6, $records);
 
-		$nsDnsRow = new DnsRecord('NS', 'example.com', 'ns3.google.com');
-		Assert::true($records->hasRecord($nsDnsRow));
+		$nsDnsRecord = new DnsRecord('NS', 'example.com', 'ns3.google.com');
+		Assert::true($records->hasRecord($nsDnsRecord));
 
-		$dnsRow = new DnsRecord('AAAA', 'example.com', '2a00:1450:4014:800::200e');
-		Assert::true($records->hasRecord($dnsRow));
+		$dnsRecord = new DnsRecord('AAAA', 'example.com', '2a00:1450:4014:800::200e');
+		Assert::true($records->hasRecord($dnsRecord));
 
-		$record = $records->getMatchingRecord($dnsRow);
+		$record = $records->getMatchingRecord($dnsRecord);
 		Assert::type(DnsRecord::class, $record);
-		Assert::same($this->getMatchingRow(), $record->toArray());
+		Assert::same($this->getMatchingRecord(), $record->toArray());
 
-		$notExistDnsRow = new DnsRecord('AAAA', 'google.com', '1111:1450:5555:800::200e');
-		Assert::false($records->hasRecord($notExistDnsRow));
+		$notExistDnsRecord = new DnsRecord('AAAA', 'google.com', '1111:1450:5555:800::200e');
+		Assert::false($records->hasRecord($notExistDnsRecord));
 
-		Assert::true($records->hasSameRecords([$nsDnsRow, $dnsRow]));
-		Assert::false($records->hasSameRecords([$nsDnsRow, $notExistDnsRow]));
+		Assert::true($records->hasSameRecords([$nsDnsRecord, $dnsRecord]));
+		Assert::false($records->hasSameRecords([$nsDnsRecord, $notExistDnsRecord]));
 
 		$byType = $records->getRecordsByType(DnsRecordType::MX);
 		Assert::count(2, $byType);
 		Assert::type(MxRecord::class, $byType[0]);
 	}
 
-	private function getMatchingRow(): array
+	private function getMatchingRecord(): array
 	{
 		return [
 			'type' => 'AAAA',
@@ -52,7 +52,7 @@ class DnsRecordSetTest extends BaseTestCase
 		];
 	}
 
-	private function getDnsRows(): array
+	private function getDnsRecords(): array
 	{
 		return [
 			[
