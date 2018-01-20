@@ -42,11 +42,6 @@
             <property name="searchAnnotations" type="boolean" value="true"/>
         </properties>
     </rule>
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-        <properties>
-            <property name="rootNamespaces" type="array" value="libs/SmartSelling=>SmartSelling"/>
-        </properties>
-    </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
         <properties>
             <property name="allowFullyQualifiedExceptions" type="boolean" value="true"/>
