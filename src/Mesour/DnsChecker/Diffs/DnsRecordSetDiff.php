@@ -4,6 +4,9 @@ namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\IDnsRecord;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class DnsRecordSetDiff
 {
 

@@ -124,7 +124,7 @@ $expected = $this->createExpectedDnsRecordSet();
 $checker = new DnsChecker(new DnsRecordProvider());
 $recordSet = $checker->getDnsRecordSet('example.com');
 
-/** @var Mesour\DnsChecker\Diffs\DnsRecordSetDiff */
+/** @var Mesour\DnsChecker\Diffs\DnsRecordSetDiff $diff */
 $diff = $factory->createDiff($expected, $recordSet);
 
 Assert::true($diff->hasDifferentRecord());

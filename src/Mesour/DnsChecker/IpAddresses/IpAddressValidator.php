@@ -2,6 +2,9 @@
 
 namespace Mesour\DnsChecker\IpAddresses;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class IpAddressValidator
 {
 

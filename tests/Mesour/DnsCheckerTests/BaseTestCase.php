@@ -6,7 +6,7 @@ use Mesour\DnsChecker\DnsChecker;
 use Mesour\DnsChecker\Providers\StaticDnsRecordProvider;
 use Tester\TestCase;
 
-class BaseTestCase extends TestCase
+abstract class BaseTestCase extends TestCase
 {
 
 	protected function createChecker(array $dnsRows)

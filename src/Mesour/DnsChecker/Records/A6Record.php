@@ -2,6 +2,9 @@
 
 namespace Mesour\DnsChecker;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class A6Record extends DnsRecord
 {
 

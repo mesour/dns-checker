@@ -4,6 +4,9 @@ namespace Mesour\DnsChecker;
 
 use Mesour\DnsChecker\Providers\IDnsRecordProvider;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class DnsChecker
 {
 

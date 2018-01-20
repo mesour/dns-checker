@@ -4,6 +4,9 @@ namespace Mesour\DnsChecker;
 
 use Mesour\DnsChecker\IpAddresses\IpAddressNormalizer;
 
+/**
+ * @author Matouš Němec <mesour.com>
+ */
 class AaaaDnsRecord extends DnsRecord
 {
 
