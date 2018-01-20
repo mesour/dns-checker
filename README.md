@@ -2,6 +2,10 @@
 
 - [Author](http://mesour.com)
 
+- DNS checker written in PHP for check and compare real DNS records for domain.
+
+- Problem with PHP warning: `dns_get_record(): A temporary server error occurred.` is resolved.
+
 # Install
 
 - With [Composer](https://getcomposer.org)
@@ -24,7 +28,7 @@ $provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider();
 $checker = new \Mesour\DnsChecker\DnsChecker($provider);
 ```
 
-3. Get DNS record set:
+3. Get DNS record set (second parameter `type` have same values as parameter `type` for [PHP function dns_get_record()](http://php.net/manual/en/function.dns-get-record.php).):
 
 ```php
 $dnsRecordSet = $checker->getDnsRecordSet('example.com', DNS_A + DNS_AAAA);
@@ -76,7 +80,7 @@ Run command `vendor/bin/tester tests/ -s -c tests/php.ini --colors`
 For your own tests can use `Mesour\DnsProvider\StaticDnsRecordProvider`. Values are as return values of [PHP function dns_get_record()](http://php.net/manual/en/function.dns-get-record.php).
 
 ```php
-$provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider([
+$provider = new \Mesour\DnsChecker\Providers\StaticDnsRecordProvider([
 	[
     	'host' => 'example.com',
     	'class' => 'IN',
