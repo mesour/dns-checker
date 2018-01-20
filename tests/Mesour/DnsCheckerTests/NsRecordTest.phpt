@@ -8,7 +8,7 @@ use Tester\Assert;
 require_once __DIR__ . '/../../bootstrap.php';
 require_once __DIR__ . '/BaseTestCase.php';
 
-class PtrRecordTest extends BaseTestCase
+class NsRecordTest extends BaseTestCase
 {
 
 	public function testDefault()
@@ -26,10 +26,10 @@ class PtrRecordTest extends BaseTestCase
 	{
 		return [
 			[
-				'type' => 'PTR',
+				'type' => 'NS',
 				'name' => 'example.com',
 				'content' => 'test.example.com',
-				'ttl' => 300,
+				'ttl' => 900,
 			],
 		];
 	}
@@ -39,9 +39,9 @@ class PtrRecordTest extends BaseTestCase
 		return [
 			[
 				'host' => 'example.com',
-				'class' => 'PTR',
-				'ttl' => 300,
-				'type' => 'PTR',
+				'class' => 'IN',
+				'ttl' => 900,
+				'type' => 'NS',
 				'target' => 'test.example.com',
 			],
 		];
@@ -49,5 +49,5 @@ class PtrRecordTest extends BaseTestCase
 
 }
 
-$test = new PtrRecordTest();
+$test = new NsRecordTest();
 $test->run();

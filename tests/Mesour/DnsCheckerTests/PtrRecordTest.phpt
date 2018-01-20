@@ -8,7 +8,7 @@ use Tester\Assert;
 require_once __DIR__ . '/../../bootstrap.php';
 require_once __DIR__ . '/BaseTestCase.php';
 
-class CNameRecordTest extends BaseTestCase
+class PtrRecordTest extends BaseTestCase
 {
 
 	public function testDefault()
@@ -26,10 +26,10 @@ class CNameRecordTest extends BaseTestCase
 	{
 		return [
 			[
-				'type' => 'CNAME',
+				'type' => 'PTR',
 				'name' => 'example.com',
-				'content' => '*.example.com',
-				'ttl' => 1800,
+				'content' => 'test.example.com',
+				'ttl' => 300,
 			],
 		];
 	}
@@ -40,14 +40,14 @@ class CNameRecordTest extends BaseTestCase
 			[
 				'host' => 'example.com',
 				'class' => 'IN',
-				'ttl' => 1800,
-				'type' => 'CNAME',
-				'target' => '*.example.com',
+				'ttl' => 300,
+				'type' => 'PTR',
+				'target' => 'test.example.com',
 			],
 		];
 	}
 
 }
 
-$test = new CNameRecordTest();
+$test = new PtrRecordTest();
 $test->run();

@@ -39,6 +39,63 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		return $out;
 	}
 
+	/**
+	 * @param string $type
+	 * @return IDnsRecord[]
+	 */
+	public function getRecordsByType($type)
+	{
+		$out = [];
+		foreach ($this->dnsRecords as $dnsRecord) {
+			if ($dnsRecord->getType() === $type) {
+				$out[] = $dnsRecord;
+			}
+		}
+		return $out;
+	}
+
+	/**
+	 * @param IDnsRecord $dnsRecord
+	 * @return bool
+	 */
+	public function hasRecord(IDnsRecord $dnsRecord)
+	{
+		return $this->getMatchingRecord($dnsRecord) !== null;
+	}
+
+	/**
+	 * @param IDnsRecord $checkedDnsRecord
+	 * @return IDnsRecord|null
+	 */
+	public function getMatchingRecord(IDnsRecord $checkedDnsRecord)
+	{
+		foreach ($this->dnsRecords as $dnsRecord) {
+			if ($this->areSame($dnsRecord, $checkedDnsRecord)) {
+				return $dnsRecord;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param IDnsRecord[] $checkedRecords
+	 * @return bool
+	 */
+	public function hasSameRecords(array $checkedRecords)
+	{
+		foreach ($this->dnsRecords as $dnsRecord) {
+			if (count($checkedRecords) === 0) {
+				break;
+			}
+			foreach ($checkedRecords as $key => $checkedRecord) {
+				if ($this->areSame($dnsRecord, $checkedRecord)) {
+					unset($checkedRecords[$key]);
+				}
+			}
+		}
+		return count($checkedRecords) === 0;
+	}
+
 	public function count()
 	{
 		return count($this->dnsRecords);
@@ -92,6 +149,11 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	public function __clone()
 	{
 		$this->rewind();
+	}
+
+	private function areSame(IDnsRecord $first, IDnsRecord $second)
+	{
+		return $first->getType() === $second->getType() && $first->getContent() === $second->getContent();
 	}
 
 }
