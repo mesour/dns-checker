@@ -1,8 +1,8 @@
 <?php
 
-namespace Mesour\DnsProvider;
+namespace Mesour\DnsChecker;
 
-use Mesour\DnsProvider\Providers\IDnsRecordProvider;
+use Mesour\DnsChecker\Providers\IDnsRecordProvider;
 
 class DnsChecker
 {
@@ -31,6 +31,31 @@ class DnsChecker
 			$out[] = DnsRecord::fromPhpArray($record);
 		}
 		return new DnsRecordSet($out);
+	}
+
+	/**
+	 * @param DnsRecordRequest $request
+	 * @return DnsRecordSet
+	 */
+	public function getDnsRecordSetFromRequest(DnsRecordRequest $request): DnsRecordSet
+	{
+		/** @var DnsRecordSet|null $output */
+		$output = null;
+		foreach ($request->getDomainPairs() as list ($domain, $type)) {
+			$records = $this->dnsRecordProvider->getDnsRecordArray($domain, $type);
+			$out = [];
+
+			foreach ($records as $record) {
+				$out[] = DnsRecord::fromPhpArray($record);
+			}
+			$dnsRecordSet = new DnsRecordSet($out);
+			if ($output === null) {
+				$output = $dnsRecordSet;
+			} else {
+				$output = $output->merge($dnsRecordSet);
+			}
+		}
+		return $output === null ? new DnsRecordSet([]) : $output;
 	}
 
 }

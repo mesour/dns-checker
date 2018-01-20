@@ -19,6 +19,9 @@
       "nette/robot-loader": "^2.4",
       "nette/tester": "^1.7"
   },
+  "suggest": {
+    "nette/bootstrap": "to use class DnsCheckerExtension"
+  },
   "autoload": {
       "classmap": ["src/"]
   }

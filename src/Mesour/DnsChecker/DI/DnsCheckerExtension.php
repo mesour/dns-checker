@@ -1,10 +1,10 @@
 <?php
 
-namespace Mesour\DnsProvider\DI;
+namespace Mesour\DnsChecker\DI;
 
-use Mesour\DnsProvider\DnsChecker;
-use Mesour\DnsProvider\Providers\DnsRecordProvider;
-use Mesour\DnsProvider\Providers\IDnsRecordProvider;
+use Mesour\DnsChecker\DnsChecker;
+use Mesour\DnsChecker\Providers\DnsRecordProvider;
+use Mesour\DnsChecker\Providers\IDnsRecordProvider;
 use Nette\DI\CompilerExtension;
 
 class DnsCheckerExtension extends CompilerExtension

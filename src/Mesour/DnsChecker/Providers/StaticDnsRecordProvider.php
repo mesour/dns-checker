@@ -1,6 +1,6 @@
 <?php
 
-namespace Mesour\DnsProvider\Providers;
+namespace Mesour\DnsChecker\Providers;
 
 class StaticDnsRecordProvider implements IDnsRecordProvider
 {

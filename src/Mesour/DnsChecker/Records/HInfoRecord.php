@@ -1,6 +1,6 @@
 <?php
 
-namespace Mesour\DnsProvider;
+namespace Mesour\DnsChecker;
 
 class HInfoRecord extends DnsRecord
 {

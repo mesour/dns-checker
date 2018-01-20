@@ -1,6 +1,6 @@
 <?php
 
-namespace Mesour\DnsProvider;
+namespace Mesour\DnsChecker;
 
 class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 {
@@ -94,6 +94,11 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 			}
 		}
 		return count($checkedRecords) === 0;
+	}
+
+	public function merge(DnsRecordSet $dnsRecordSet): DnsRecordSet
+	{
+		return new DnsRecordSet(array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
 	}
 
 	public function count()

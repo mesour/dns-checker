@@ -2,8 +2,8 @@
 
 namespace Mesour\DnsCheckerTests;
 
-use Mesour\DnsProvider\DnsChecker;
-use Mesour\DnsProvider\Providers\StaticDnsRecordProvider;
+use Mesour\DnsChecker\DnsChecker;
+use Mesour\DnsChecker\Providers\StaticDnsRecordProvider;
 use Tester\TestCase;
 
 class BaseTestCase extends TestCase
