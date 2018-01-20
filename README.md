@@ -24,7 +24,7 @@ $provider = new \Mesour\DnsChecker\Providers\DnsRecordProvider();
 $checker = new \Mesour\DnsChecker\DnsChecker($provider);
 ```
 
-3. Get DNS record set:
+3. Get DNS record set (second parameter `type` have same values as parameter `type` for [PHP function dns_get_record()](http://php.net/manual/en/function.dns-get-record.php).):
 
 ```php
 $dnsRecordSet = $checker->getDnsRecordSet('example.com', DNS_A + DNS_AAAA);
