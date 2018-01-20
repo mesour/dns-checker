@@ -2,7 +2,7 @@ Licenses
 ========
 
 Good news! You may use Mesour DnsChecker under the terms of either
-the New BSD License or the GNU General Public License (GPL) version 2 or 3.
+the New BSD License or the GNU General Public License (GPL) version 3.
 
 You don't have to notify anyone which license you are using. You can freely
 use Mesour DnsChecker in commercial projects as long as the copyright header
