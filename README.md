@@ -4,6 +4,8 @@
 
 - DNS checker written in PHP for check and compare real DNS records for domain.
 
+- In `AaaaDnsRecord` is IPv6 compressed to short format.
+
 - Problem with PHP warning: `dns_get_record(): A temporary server error occurred.` is resolved.
 
 # Install
