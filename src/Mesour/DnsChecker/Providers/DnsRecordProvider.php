@@ -30,7 +30,7 @@ class DnsRecordProvider implements IDnsRecordProvider
 		return $dns;
 	}
 
-	public function handleError($number, $message, $file, $line)
+	public function handleError($number, $message, $file, $line): bool
 	{
 		if (error_reporting() === 0) {
 			return false;
