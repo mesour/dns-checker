@@ -86,34 +86,6 @@ $request->addFilter('www.example.com', DNS_CNAME);
 $records = $checker->getDnsRecordSetFromRequest($request);
 ```
 
-# IP address normalizer and validator
-
-- **In `AaaaDnsRecord` is IPv6 compressed to short format.**
-
-### Usage: `Mesour\DnsChecker\IpAddresses\IpAddressValidator`
-
-```php
-Assert::true(IpAddressValidator::isIpV6('2a00:5565:2222:800::200e'));
-
-Assert::true(IpAddressValidator::isIpV4('127.0.0.1'));
-```
-
-### Usage: `Mesour\DnsChecker\IpAddresses\IpAddressNormalizer`
-
-Normalize IPv6:
-```php
-IpAddressNormalizer::normalizeIpV6('2001:db8:800::ff00:42:8329');
-
-// result is: 2001:0db8:0800:0000:0000:ff00:0042:8329
-```
-
-Compress IPv6:
-```php
-IpAddressNormalizer::compressIpV6('2001:0db8:0800:0000:0000:ff00:0042:8329');
-
-// result is: 2001:db8:800::ff00:42:8329
-```
-
 # Difference between two DnsRecordSets
 
 ```php

@@ -28,7 +28,6 @@ class HInfoRecord extends DnsRecord
 
 		$content = $this->cpu . ' ' . $this->os;
 		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
-
 	}
 
 	public function getCpu(): string

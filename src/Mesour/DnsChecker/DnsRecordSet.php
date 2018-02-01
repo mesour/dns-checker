@@ -23,12 +23,15 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->dnsRecords = $dnsRecords;
 	}
 
-	public function getRecords()
+	/**
+	 * @return IDnsRecord[]
+	 */
+	public function getRecords(): array
 	{
 		return $this->dnsRecords;
 	}
 
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return count($this->dnsRecords) === 0;
 	}
@@ -46,7 +49,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	 * @param string $type
 	 * @return IDnsRecord[]
 	 */
-	public function getRecordsByType($type)
+	public function getRecordsByType($type): array
 	{
 		$out = [];
 		foreach ($this->dnsRecords as $dnsRecord) {
@@ -61,7 +64,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	 * @param IDnsRecord $dnsRecord
 	 * @return bool
 	 */
-	public function hasRecord(IDnsRecord $dnsRecord)
+	public function hasRecord(IDnsRecord $dnsRecord): bool
 	{
 		return $this->getMatchingRecord($dnsRecord) !== null;
 	}
@@ -84,7 +87,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	 * @param IDnsRecord[] $checkedRecords
 	 * @return bool
 	 */
-	public function hasSameRecords(array $checkedRecords)
+	public function hasSameRecords(array $checkedRecords): bool
 	{
 		foreach ($this->dnsRecords as $dnsRecord) {
 			if (count($checkedRecords) === 0) {
@@ -159,7 +162,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->rewind();
 	}
 
-	private function areSame(IDnsRecord $first, IDnsRecord $second)
+	private function areSame(IDnsRecord $first, IDnsRecord $second): bool
 	{
 		return $first->getType() === $second->getType() && $first->getContent() === $second->getContent();
 	}

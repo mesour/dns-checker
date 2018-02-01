@@ -8,7 +8,8 @@
       "homepage": "http://mesour.com"
   }],
   "require": {
-      "php": ">=7.0"
+      "php": ">=7.0",
+      "mesour/ip-addresses": "^0.1.0"
   },
   "require-dev": {
       "tracy/tracy": "~2.3.0",
@@ -20,7 +21,7 @@
       "nette/tester": "^1.7"
   },
   "suggest": {
-    "nette/bootstrap": "to use class DnsCheckerExtension"
+      "nette/bootstrap": "to use class DnsCheckerExtension"
   },
   "autoload": {
       "classmap": ["src/"]

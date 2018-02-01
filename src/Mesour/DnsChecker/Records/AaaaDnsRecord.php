@@ -2,7 +2,7 @@
 
 namespace Mesour\DnsChecker;
 
-use Mesour\DnsChecker\IpAddresses\IpAddressNormalizer;
+use Mesour\IpAddresses\IpAddressNormalizer;
 
 /**
  * @author Matouš Němec <mesour.com>
