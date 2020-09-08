@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\IDnsRecord;
@@ -10,9 +12,7 @@ use Mesour\DnsChecker\IDnsRecord;
 class DnsRecordSetDiff
 {
 
-	/**
-	 * @var DnsRecordDiff[]
-	 */
+	/** @var DnsRecordDiff[] */
 	private $diffs;
 
 	/**
@@ -20,14 +20,12 @@ class DnsRecordSetDiff
 	 */
 	public function __construct(array $matches)
 	{
-		/** @var IDnsRecord $record */
-		/** @var IDnsRecord|array $match */
-		foreach ($matches as list ($record, $match)) {
-			if (is_array($match)) {
-				$this->diffs[] = new DnsRecordDiff($record, null, $match);
-			} else {
-				$this->diffs[] = new DnsRecordDiff($record, $match);
-			}
+		foreach ($matches as [$record, $match]) {
+			\assert($match instanceof IDnsRecord || \is_array($match));
+			$this->diffs[] = \is_array($match) ? new DnsRecordDiff($record, null, $match) : new DnsRecordDiff(
+				$record,
+				$match
+			);
 		}
 	}
 
@@ -39,9 +37,6 @@ class DnsRecordSetDiff
 		return $this->diffs;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function hasDifferentRecord(): bool
 	{
 		foreach ($this->diffs as $diff) {
@@ -49,6 +44,7 @@ class DnsRecordSetDiff
 				return true;
 			}
 		}
+
 		return false;
 	}
 

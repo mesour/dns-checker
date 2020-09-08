@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,23 +10,16 @@ namespace Mesour\DnsChecker;
 class DnsRecordRequest
 {
 
-	/**
-	 * @var array[]
-	 */
+	/** @var string[]|int[] */
 	private $domainPairs = [];
 
-	/**
-	 * @param string $domain
-	 * @param int $type
-	 * @return void
-	 */
-	public function addFilter(string $domain, int $type = DNS_ANY)
+	public function addFilter(string $domain, int $type = \DNS_ANY): void
 	{
 		$this->domainPairs[] = [$domain, $type];
 	}
 
 	/**
-	 * @return array[]
+	 * @return string[]|int[]
 	 */
 	public function getDomainPairs(): array
 	{

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\DnsRecord;
@@ -11,7 +13,7 @@ require_once __DIR__ . '/BaseTestCase.php';
 class PtrRecordTest extends BaseTestCase
 {
 
-	public function testDefault()
+	public function testDefault(): void
 	{
 		$checker = $this->createChecker($this->getDnsRows());
 		$records = $checker->getDnsRecordSet('example.com');
@@ -22,6 +24,9 @@ class PtrRecordTest extends BaseTestCase
 		Assert::same($this->getExpectedRows(), $records->toArray());
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getExpectedRows(): array
 	{
 		return [
@@ -34,6 +39,9 @@ class PtrRecordTest extends BaseTestCase
 		];
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getDnsRows(): array
 	{
 		return [

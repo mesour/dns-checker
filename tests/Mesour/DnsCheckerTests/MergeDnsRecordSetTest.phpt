@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\DnsChecker;
@@ -16,7 +18,7 @@ require_once __DIR__ . '/BaseTestCase.php';
 class MergeDnsRecordSetTest extends BaseTestCase
 {
 
-	public function testDefault()
+	public function testDefault(): void
 	{
 		$provider = new ArrayDnsRecordProvider([
 			$this->getDnsRecords(),
@@ -26,7 +28,7 @@ class MergeDnsRecordSetTest extends BaseTestCase
 
 		$request = new DnsRecordRequest();
 		$request->addFilter('example.com');
-		$request->addFilter('www.example.com', DNS_CNAME);
+		$request->addFilter('www.example.com', \DNS_CNAME);
 		$records = $checker->getDnsRecordSetFromRequest($request);
 
 		Assert::false($records->isEmpty());
@@ -56,6 +58,9 @@ class MergeDnsRecordSetTest extends BaseTestCase
 		Assert::type(MxRecord::class, $byType[0]);
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getMatchingRecord(): array
 	{
 		return [
@@ -66,6 +71,9 @@ class MergeDnsRecordSetTest extends BaseTestCase
 		];
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getCnameDnsRecords(): array
 	{
 		return [
@@ -79,6 +87,9 @@ class MergeDnsRecordSetTest extends BaseTestCase
 		];
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getDnsRecords(): array
 	{
 		return [

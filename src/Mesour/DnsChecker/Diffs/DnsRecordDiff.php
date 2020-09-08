@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\IDnsRecord;
@@ -10,22 +12,21 @@ use Mesour\DnsChecker\IDnsRecord;
 class DnsRecordDiff
 {
 
-	/**
-	 * @var IDnsRecord
-	 */
+	/** @var IDnsRecord */
 	private $expected;
 
-	/**
-	 * @var IDnsRecord|null
-	 */
+	/** @var IDnsRecord|null */
 	private $actual;
 
-	/**
-	 * @var IDnsRecord[]
-	 */
+	/** @var IDnsRecord[] */
 	private $sameType;
 
-	public function __construct(IDnsRecord $expected, IDnsRecord $actual = null, array $sameType = [])
+	/**
+	 * @param IDnsRecord $expected
+	 * @param IDnsRecord|null $actual
+	 * @param IDnsRecord[] $sameType
+	 */
+	public function __construct(IDnsRecord $expected, ?IDnsRecord $actual = null, array $sameType = [])
 	{
 		$this->expected = $expected;
 		$this->actual = $actual;
@@ -42,10 +43,7 @@ class DnsRecordDiff
 		return $this->expected;
 	}
 
-	/**
-	 * @return IDnsRecord|null
-	 */
-	public function getActualRecord()
+	public function getActualRecord(): ?IDnsRecord
 	{
 		return $this->actual;
 	}

@@ -6,3 +6,13 @@ parameters:
 	excludes_analyse:
 		- %rootDir%/../../../tests/bootstrap.php
 		- %rootDir%/../../../tests/environment.php
+
+	ignoreErrors:
+		- '#Parameter \#[0-9]+ \$[a-zA-Z0-9]+ of method Mesour\\DnsChecker\\DnsRecord::__construct\(\) expects (int|string), int\|string given\.#'
+		- '#Property .+ \((int|string)\) does not accept int\|string\.#'
+		- '#Parameter \#[0-9]+ \$[a-zA-Z0-9]+ of class [a-zA-Z0-9\\]+ constructor expects (int|string), int\|string given\.#'
+		- '#Method Mesour\\DnsChecker\\DnsRecordSet(.+) has .+ typehint specified\.#'
+
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingIterableValueType: false
+	treatPhpDocTypesAsCertain: false

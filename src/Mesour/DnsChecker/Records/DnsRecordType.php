@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,24 +10,22 @@ namespace Mesour\DnsChecker;
 class DnsRecordType
 {
 
-	const A = 'A';
-	const AAAA = 'AAAA';
-	const A6 = 'A6';
-	const CAA = 'CAA';
-	const CNAME = 'CNAME';
-	const HINFO = 'HINFO';
-	const MX = 'MX';
-	const NAPTR = 'NAPTR';
-	const NS = 'NS';
-	const PTR = 'PTR';
-	const SOA = 'SOA';
-	const SPF = 'SPF';
-	const SRV = 'SRV';
-	const TXT = 'TXT';
+	public const A = 'A';
+	public const AAAA = 'AAAA';
+	public const A6 = 'A6';
+	public const CAA = 'CAA';
+	public const CNAME = 'CNAME';
+	public const HINFO = 'HINFO';
+	public const MX = 'MX';
+	public const NAPTR = 'NAPTR';
+	public const NS = 'NS';
+	public const PTR = 'PTR';
+	public const SOA = 'SOA';
+	public const SPF = 'SPF';
+	public const SRV = 'SRV';
+	public const TXT = 'TXT';
 
-	/**
-	 * @var int[]
-	 */
+	/** @var int[] */
 	private static $phpValues = [
 		self::A => \DNS_A,
 		self::AAAA => \DNS_AAAA,
@@ -45,34 +45,34 @@ class DnsRecordType
 	/**
 	 * @return string[]
 	 */
-	public static function getAll()
+	public static function getAll(): array
 	{
 		return [
-			static::A,
-			static::AAAA,
-			static::A6,
-			static::CAA,
-			static::CNAME,
-			static::HINFO,
-			static::MX,
-			static::NAPTR,
-			static::NS,
-			static::PTR,
-			static::SOA,
-			static::SPF,
-			static::SRV,
-			static::TXT,
+			self::A,
+			self::AAAA,
+			self::A6,
+			self::CAA,
+			self::CNAME,
+			self::HINFO,
+			self::MX,
+			self::NAPTR,
+			self::NS,
+			self::PTR,
+			self::SOA,
+			self::SPF,
+			self::SRV,
+			self::TXT,
 		];
 	}
 
 	public static function isValid(string $type): bool
 	{
-		return in_array($type, static::getAll(), true);
+		return \in_array($type, static::getAll(), true);
 	}
 
 	public static function getPhpValue(string $type): int
 	{
-		return isset(static::$phpValues[$type]) ? static::$phpValues[$type] : \DNS_ALL;
+		return static::$phpValues[$type] ?? \DNS_ALL;
 	}
 
 }

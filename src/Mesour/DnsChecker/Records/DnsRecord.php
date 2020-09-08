@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,70 +10,30 @@ namespace Mesour\DnsChecker;
 class DnsRecord implements IDnsRecord
 {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $type;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $name;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $content;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $ttl;
 
 	public function __construct(string $type, string $name, string $content, int $ttl = 1800)
 	{
-		$type = strtoupper($type);
+		$type = \strtoupper($type);
+
 		if (!DnsRecordType::isValid($type)) {
 			throw new \InvalidArgumentException('Invalid DNS row type');
 		}
+
 		$this->type = $type;
 		$this->name = $name;
 		$this->content = $content;
 		$this->ttl = $ttl;
-	}
-
-	/**
-	 * @param array $record
-	 * @return IDnsRecord|null
-	 */
-	public static function fromPhpArray(array $record): IDnsRecord
-	{
-		$type = $record['type'];
-		if ($type === DnsRecordType::A) {
-			$content = $record['ip'];
-		} elseif ($type === DnsRecordType::AAAA) {
-			return new AaaaDnsRecord($type, $record['host'], $record['ipv6'], $record['ttl']);
-		} elseif (in_array($type, [DnsRecordType::CNAME, DnsRecordType::NS, DnsRecordType::PTR], true)) {
-			$content = $record['target'];
-		} elseif ($type === DnsRecordType::TXT) {
-			$content = $record['txt'];
-		} elseif ($type === DnsRecordType::MX) {
-			return new MxRecord($record);
-		} elseif ($type === DnsRecordType::SOA) {
-			return new SoaRecord($record);
-		} elseif ($type === DnsRecordType::CAA) {
-			return new CaaRecord($record);
-		} elseif ($type === DnsRecordType::HINFO) {
-			return new HInfoRecord($record);
-		} elseif ($type === DnsRecordType::SRV) {
-			return new SrvRecord($record);
-		} elseif ($type === DnsRecordType::A6) {
-			return new A6Record($record);
-		} else {
-			throw new \RuntimeException(sprintf('Dns record type %s is not implemented', $type));
-		}
-
-		return new static($type, $record['host'], $content, $record['ttl']);
 	}
 
 	public function getType(): string
@@ -94,6 +56,9 @@ class DnsRecord implements IDnsRecord
 		return $this->ttl;
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	public function toArray(): array
 	{
 		return [
@@ -102,6 +67,41 @@ class DnsRecord implements IDnsRecord
 			'content' => $this->getContent(),
 			'ttl' => $this->getTtl(),
 		];
+	}
+
+	/**
+	 * @param string[]|int[] $record
+	 * @return IDnsRecord
+	 */
+	public static function fromPhpArray(array $record): IDnsRecord
+	{
+		$type = $record['type'];
+
+		if ($type === DnsRecordType::A) {
+			$content = $record['ip'];
+		} elseif ($type === DnsRecordType::AAAA) {
+			return new AaaaDnsRecord($type, $record['host'], $record['ipv6'], $record['ttl']);
+		} elseif (\in_array($type, [DnsRecordType::CNAME, DnsRecordType::NS, DnsRecordType::PTR], true)) {
+			$content = $record['target'];
+		} elseif ($type === DnsRecordType::TXT) {
+			$content = $record['txt'];
+		} elseif ($type === DnsRecordType::MX) {
+			return new MxRecord($record);
+		} elseif ($type === DnsRecordType::SOA) {
+			return new SoaRecord($record);
+		} elseif ($type === DnsRecordType::CAA) {
+			return new CaaRecord($record);
+		} elseif ($type === DnsRecordType::HINFO) {
+			return new HInfoRecord($record);
+		} elseif ($type === DnsRecordType::SRV) {
+			return new SrvRecord($record);
+		} elseif ($type === DnsRecordType::A6) {
+			return new A6Record($record);
+		} else {
+			throw new \RuntimeException(\sprintf('Dns record type %s is not implemented', $type));
+		}
+
+		return new self($type, $record['host'], $content, $record['ttl']);
 	}
 
 }

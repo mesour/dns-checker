@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -16,6 +18,9 @@ interface IDnsRecord
 
 	public function getTtl(): int;
 
+	/**
+	 * @return string[]|int[]
+	 */
 	public function toArray(): array;
 
 }
