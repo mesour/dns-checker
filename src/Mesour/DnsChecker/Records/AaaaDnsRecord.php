@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 use Mesour\IpAddresses\IpAddressNormalizer;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\AaaaDnsRecord;
@@ -14,7 +16,7 @@ require_once __DIR__ . '/BaseTestCase.php';
 class DnsRecordSetTest extends BaseTestCase
 {
 
-	public function testDefault()
+	public function testDefault(): void
 	{
 		$checker = $this->createChecker($this->getDnsRecords());
 		$records = $checker->getDnsRecordSet('example.com');
@@ -43,6 +45,9 @@ class DnsRecordSetTest extends BaseTestCase
 		Assert::type(MxRecord::class, $byType[0]);
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getMatchingRecord(): array
 	{
 		return [
@@ -53,6 +58,9 @@ class DnsRecordSetTest extends BaseTestCase
 		];
 	}
 
+	/**
+	 * @return string[]|int[]
+	 */
 	private function getDnsRecords(): array
 	{
 		return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,33 +10,30 @@ namespace Mesour\DnsChecker;
 class MxRecord extends DnsRecord
 {
 
-	/**
-	 * @var int|null
-	 */
+	/** @var int|null */
 	private $priority;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $target;
 
 	/**
-	 * @param array $record
+	 * @param string[]|int[] $record
 	 */
 	public function __construct(array $record)
 	{
-		$this->priority = isset($record['pri']) ? $record['pri'] : null;
+		$this->priority = $record['pri']
+			? (int) $record['pri']
+			: null;
 		$this->target = $record['target'];
 
-		$content = $this->priority ? ($this->priority . ' ' . $this->target) : $this->target;
-		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
+		$content = $this->priority
+			? ($this->priority . ' ' . $this->target)
+			: $this->target;
 
+		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 
-	/**
-	 * @return int|null
-	 */
-	public function getPriority()
+	public function getPriority(): ?int
 	{
 		return $this->priority;
 	}

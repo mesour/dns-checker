@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,16 +10,15 @@ namespace Mesour\DnsChecker;
 class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 {
 
-	/**
-	 * @var IDnsRecord[]
-	 */
+	/** @var IDnsRecord[] */
 	private $dnsRecords;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $position = 0;
 
+	/**
+	 * @param IDnsRecord[] $dnsRecords
+	 */
 	public function __construct(array $dnsRecords)
 	{
 		$this->dnsRecords = $dnsRecords;
@@ -33,15 +34,20 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 
 	public function isEmpty(): bool
 	{
-		return count($this->dnsRecords) === 0;
+		return \count($this->dnsRecords) === 0;
 	}
 
+	/**
+	 * @return string[][]|int[][]
+	 */
 	public function toArray(): array
 	{
 		$out = [];
+
 		foreach ($this->dnsRecords as $dnsRecord) {
 			$out[] = $dnsRecord->toArray();
 		}
+
 		return $out;
 	}
 
@@ -49,37 +55,34 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	 * @param string $type
 	 * @return IDnsRecord[]
 	 */
-	public function getRecordsByType($type): array
+	public function getRecordsByType(string $type): array
 	{
 		$out = [];
+
 		foreach ($this->dnsRecords as $dnsRecord) {
-			if ($dnsRecord->getType() === $type) {
-				$out[] = $dnsRecord;
+			if ($dnsRecord->getType() !== $type) {
+				continue;
 			}
+
+			$out[] = $dnsRecord;
 		}
+
 		return $out;
 	}
 
-	/**
-	 * @param IDnsRecord $dnsRecord
-	 * @return bool
-	 */
 	public function hasRecord(IDnsRecord $dnsRecord): bool
 	{
 		return $this->getMatchingRecord($dnsRecord) !== null;
 	}
 
-	/**
-	 * @param IDnsRecord $checkedDnsRecord
-	 * @return IDnsRecord|null
-	 */
-	public function getMatchingRecord(IDnsRecord $checkedDnsRecord)
+	public function getMatchingRecord(IDnsRecord $checkedDnsRecord): ?IDnsRecord
 	{
 		foreach ($this->dnsRecords as $dnsRecord) {
 			if ($this->areSame($dnsRecord, $checkedDnsRecord)) {
 				return $dnsRecord;
 			}
 		}
+
 		return null;
 	}
 
@@ -90,29 +93,33 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	public function hasSameRecords(array $checkedRecords): bool
 	{
 		foreach ($this->dnsRecords as $dnsRecord) {
-			if (count($checkedRecords) === 0) {
+			if (\count($checkedRecords) === 0) {
 				break;
 			}
+
 			foreach ($checkedRecords as $key => $checkedRecord) {
-				if ($this->areSame($dnsRecord, $checkedRecord)) {
-					unset($checkedRecords[$key]);
+				if (!$this->areSame($dnsRecord, $checkedRecord)) {
+					continue;
 				}
+
+				unset($checkedRecords[$key]);
 			}
 		}
-		return count($checkedRecords) === 0;
+
+		return \count($checkedRecords) === 0;
 	}
 
 	public function merge(DnsRecordSet $dnsRecordSet): DnsRecordSet
 	{
-		return new DnsRecordSet(array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
+		return new DnsRecordSet(\array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
 	}
 
 	public function count()
 	{
-		return count($this->dnsRecords);
+		return \count($this->dnsRecords);
 	}
 
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->position = 0;
 	}
@@ -127,9 +134,9 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		return $this->position;
 	}
 
-	public function next()
+	public function next(): void
 	{
-		++$this->position;
+		$this->position++;
 	}
 
 	public function valid()
@@ -144,27 +151,27 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 
 	public function offsetGet($offset)
 	{
-		return isset($this->dnsRecords[$offset]) ? $this->dnsRecords[$offset] : null;
+		return $this->dnsRecords[$offset] ?? null;
 	}
 
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		throw new \RuntimeException('DnsRecordSet is read only.');
 	}
 
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		throw new \RuntimeException('DnsRecordSet is read only.');
-	}
-
-	public function __clone()
-	{
-		$this->rewind();
 	}
 
 	private function areSame(IDnsRecord $first, IDnsRecord $second): bool
 	{
 		return $first->getType() === $second->getType() && $first->getContent() === $second->getContent();
+	}
+
+	public function __clone()
+	{
+		$this->rewind();
 	}
 
 }

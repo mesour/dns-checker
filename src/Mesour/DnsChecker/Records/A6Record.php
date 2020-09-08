@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,23 +10,17 @@ namespace Mesour\DnsChecker;
 class A6Record extends DnsRecord
 {
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $masklen;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $ipV6;
 
-	/**
-	 * @var mixed
-	 */
+	/** @var int|string */
 	private $chain;
 
 	/**
-	 * @param array $record
+	 * @param string[]|int[] $record
 	 */
 	public function __construct(array $record)
 	{
@@ -33,8 +29,8 @@ class A6Record extends DnsRecord
 		$this->chain = $record['chain'];
 
 		$content = $this->masklen . ' ' . $this->ipV6 . ' ' . $this->chain;
-		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 
+		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 
 	public function getMasklen(): int
@@ -47,6 +43,9 @@ class A6Record extends DnsRecord
 		return $this->ipV6;
 	}
 
+	/**
+	 * @return int|string
+	 */
 	public function getChain()
 	{
 		return $this->chain;

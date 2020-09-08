@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,43 +10,29 @@ namespace Mesour\DnsChecker;
 class SoaRecord extends DnsRecord
 {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $mname;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $rname;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $serial;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $refresh;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $retry;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $expire;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $minimumTtl;
 
 	/**
-	 * @param array $record
+	 * @param string[]|int[] $record
 	 */
 	public function __construct(array $record)
 	{
@@ -63,8 +51,8 @@ class SoaRecord extends DnsRecord
 		$content .= $this->retry . ' ';
 		$content .= $this->expire . ' ';
 		$content .= $this->minimumTtl;
-		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 
+		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 
 	public function getMname(): string

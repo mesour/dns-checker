@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,18 +10,14 @@ namespace Mesour\DnsChecker;
 class HInfoRecord extends DnsRecord
 {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $cpu;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $os;
 
 	/**
-	 * @param array $record
+	 * @param string[]|int[] $record
 	 */
 	public function __construct(array $record)
 	{
@@ -27,6 +25,7 @@ class HInfoRecord extends DnsRecord
 		$this->os = $record['os'];
 
 		$content = $this->cpu . ' ' . $this->os;
+
 		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 

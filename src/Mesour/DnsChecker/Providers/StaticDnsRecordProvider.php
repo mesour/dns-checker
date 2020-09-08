@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker\Providers;
 
 /**
@@ -8,11 +10,12 @@ namespace Mesour\DnsChecker\Providers;
 class StaticDnsRecordProvider implements IDnsRecordProvider
 {
 
-	/**
-	 * @var array
-	 */
+	/** @var string[][]|int[][] */
 	private $dnsArray;
 
+	/**
+	 * @param string[][]|int[][] $dnsArray
+	 */
 	public function __construct(array $dnsArray)
 	{
 		$this->dnsArray = $dnsArray;
@@ -21,9 +24,9 @@ class StaticDnsRecordProvider implements IDnsRecordProvider
 	/**
 	 * @param string $domain
 	 * @param int $type
-	 * @return array[]
+	 * @return string[][]|int[][]
 	 */
-	public function getDnsRecordArray($domain, int $type = DNS_ANY): array
+	public function getDnsRecordArray(string $domain, int $type = \DNS_ANY): array
 	{
 		return $this->dnsArray;
 	}

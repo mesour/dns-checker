@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker\DI;
 
 use Mesour\DnsChecker\Diffs\DnsRecordSetDiffFactory;
@@ -14,7 +16,7 @@ use Nette\DI\CompilerExtension;
 class DnsCheckerExtension extends CompilerExtension
 {
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$container = $this->getContainerBuilder();
 

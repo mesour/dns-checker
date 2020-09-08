@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Mesour\DnsChecker;
 
 /**
@@ -8,23 +10,17 @@ namespace Mesour\DnsChecker;
 class CaaRecord extends DnsRecord
 {
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $flags;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $tag;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $value;
 
 	/**
-	 * @param array $record
+	 * @param string[]|int[] $record
 	 */
 	public function __construct(array $record)
 	{
@@ -33,8 +29,8 @@ class CaaRecord extends DnsRecord
 		$this->value = $record['value'];
 
 		$content = $this->flags . ' ' . $this->tag . ' ' . $this->value;
-		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 
+		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 
 	public function getFlags(): int
