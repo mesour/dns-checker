@@ -12,9 +12,10 @@ use Tester\TestCase;
 abstract class BaseTestCase extends TestCase
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
+
 		Environment::lock('test', __DIR__ . '/../../tmp');
 	}
 
