@@ -46,8 +46,8 @@ class A6Record extends DnsRecord
 	/**
 	 * @return int|string
 	 */
-	public function getChain()
-	{
+	public function getChain(): int|string
+    {
 		return $this->chain;
 	}
 

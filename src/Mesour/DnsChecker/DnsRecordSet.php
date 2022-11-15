@@ -114,8 +114,8 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		return new DnsRecordSet(\array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
 	}
 
-	public function count()
-	{
+	public function count(): int
+    {
 		return \count($this->dnsRecords);
 	}
 
@@ -124,12 +124,12 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->position = 0;
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return $this->dnsRecords[$this->position];
 	}
 
-	public function key()
+	public function key(): mixed
 	{
 		return $this->position;
 	}
@@ -139,17 +139,17 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->position++;
 	}
 
-	public function valid()
-	{
+	public function valid(): bool
+    {
 		return isset($this->dnsRecords[$this->position]);
 	}
 
-	public function offsetExists($offset)
-	{
+	public function offsetExists($offset): bool
+    {
 		return isset($this->dnsRecords[$offset]);
 	}
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): mixed
 	{
 		return $this->dnsRecords[$offset] ?? null;
 	}
