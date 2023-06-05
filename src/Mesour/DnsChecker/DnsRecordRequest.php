@@ -1,25 +1,22 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
+use const DNS_ANY;
+
 class DnsRecordRequest
 {
 
-	/** @var string[]|int[] */
-	private $domainPairs = [];
+	/** @var array<array<int|string>> */
+	private array $domainPairs = [];
 
-	public function addFilter(string $domain, int $type = \DNS_ANY): void
+	public function addFilter(string $domain, int $type = DNS_ANY): void
 	{
 		$this->domainPairs[] = [$domain, $type];
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<int|string>>
 	 */
 	public function getDomainPairs(): array
 	{

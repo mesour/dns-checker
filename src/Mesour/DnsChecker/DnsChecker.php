@@ -1,26 +1,18 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
 use Mesour\DnsChecker\Providers\IDnsRecordProvider;
+use const DNS_ANY;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class DnsChecker
 {
 
-	/** @var IDnsRecordProvider */
-	private $dnsRecordProvider;
-
-	public function __construct(IDnsRecordProvider $dnsRecordProvider)
+	public function __construct(private IDnsRecordProvider $dnsRecordProvider)
 	{
-		$this->dnsRecordProvider = $dnsRecordProvider;
 	}
 
-	public function getDnsRecordSet(string $domain, int $type = \DNS_ANY): DnsRecordSet
+	public function getDnsRecordSet(string $domain, int $type = DNS_ANY): DnsRecordSet
 	{
 		$records = $this->dnsRecordProvider->getDnsRecordArray($domain, $type);
 		$out = [];
@@ -35,10 +27,9 @@ class DnsChecker
 	public function getDnsRecordSetFromRequest(DnsRecordRequest $request): DnsRecordSet
 	{
 		$output = null;
-		\assert($output instanceof DnsRecordSet || $output === null);
 
 		foreach ($request->getDomainPairs() as [$domain, $type]) {
-			$records = $this->dnsRecordProvider->getDnsRecordArray($domain, $type);
+			$records = $this->dnsRecordProvider->getDnsRecordArray((string) $domain, (int) $type);
 			$out = [];
 
 			foreach ($records as $record) {

@@ -1,14 +1,8 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\MxRecord;
-use Tester\Assert;
-
-require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/BaseTestCase.php';
 
 class MxRecordTest extends BaseTestCase
 {
@@ -18,14 +12,14 @@ class MxRecordTest extends BaseTestCase
 		$checker = $this->createChecker($this->getDnsRows());
 		$records = $checker->getDnsRecordSet('example.com');
 
-		Assert::false($records->isEmpty());
-		Assert::count(3, $records);
-		Assert::type(MxRecord::class, $records[0]);
-		Assert::same($this->getExpectedRows(), $records->toArray());
+		self::assertFalse($records->isEmpty());
+		self::assertCount(3, $records);
+		self::assertInstanceOf(MxRecord::class, $records[0]);
+		self::assertSame($this->getExpectedRows(), $records->toArray());
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getExpectedRows(): array
 	{
@@ -52,7 +46,7 @@ class MxRecordTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getDnsRows(): array
 	{
@@ -85,6 +79,3 @@ class MxRecordTest extends BaseTestCase
 	}
 
 }
-
-$test = new MxRecordTest();
-$test->run();

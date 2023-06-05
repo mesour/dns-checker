@@ -1,14 +1,8 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\SoaRecord;
-use Tester\Assert;
-
-require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/BaseTestCase.php';
 
 class SoaRecordTest extends BaseTestCase
 {
@@ -18,14 +12,14 @@ class SoaRecordTest extends BaseTestCase
 		$checker = $this->createChecker($this->getDnsRows());
 		$records = $checker->getDnsRecordSet('example.com');
 
-		Assert::false($records->isEmpty());
-		Assert::count(1, $records);
-		Assert::type(SoaRecord::class, $records[0]);
-		Assert::same($this->getExpectedRows(), $records->toArray());
+		self::assertFalse($records->isEmpty());
+		self::assertCount(1, $records);
+		self::assertInstanceOf(SoaRecord::class, $records[0]);
+		self::assertSame($this->getExpectedRows(), $records->toArray());
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getExpectedRows(): array
 	{
@@ -40,7 +34,7 @@ class SoaRecordTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getDnsRows(): array
 	{
@@ -52,16 +46,13 @@ class SoaRecordTest extends BaseTestCase
 				'type' => 'SOA',
 				'mname' => 'ns1.google.com',
 				'rname' => 'dns-admin.google.com',
-				'serial' => 182582804,
+				'serial' => 182_582_804,
 				'refresh' => 900,
 				'retry' => 900,
-				'expire' => 1800,
+				'expire' => 1_800,
 				'minimum-ttl' => 60,
 			],
 		];
 	}
 
 }
-
-$test = new SoaRecordTest();
-$test->run();

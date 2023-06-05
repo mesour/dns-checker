@@ -1,15 +1,12 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\DnsRecordSet;
 use Mesour\DnsChecker\IDnsRecord;
+use function in_array;
+use function is_array;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class DnsRecordSetDiffFactory
 {
 
@@ -39,16 +36,14 @@ class DnsRecordSetDiffFactory
 	}
 
 	/**
-	 * @param DnsRecordSet $actual
-	 * @param string[]|int[] $matches
-	 * @return DnsRecordSet
+	 * @param array<string>|array<int>|array<IDnsRecord>|array<array<IDnsRecord>> $matches
 	 */
 	private function getActualNotMatched(DnsRecordSet $actual, array $matches): DnsRecordSet
 	{
 		$forCheck = [];
 
 		foreach ($matches as $match) {
-			if (!\is_array($match)) {
+			if (!is_array($match)) {
 				continue;
 			}
 
@@ -58,7 +53,7 @@ class DnsRecordSetDiffFactory
 		$out = [];
 
 		foreach ($actual->getRecords() as $record) {
-			if (\in_array($record, $forCheck, true)) {
+			if (in_array($record, $forCheck, true)) {
 				continue;
 			}
 

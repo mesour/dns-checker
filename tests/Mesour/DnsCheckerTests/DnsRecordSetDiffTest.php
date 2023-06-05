@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsCheckerTests;
 
@@ -8,10 +6,6 @@ use Mesour\DnsChecker\Diffs\DnsRecordDiff;
 use Mesour\DnsChecker\Diffs\DnsRecordSetDiffFactory;
 use Mesour\DnsChecker\DnsRecord;
 use Mesour\DnsChecker\DnsRecordSet;
-use Tester\Assert;
-
-require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/BaseTestCase.php';
 
 class DnsRecordSetDiffTest extends BaseTestCase
 {
@@ -27,38 +21,38 @@ class DnsRecordSetDiffTest extends BaseTestCase
 
 		$diff = $factory->createDiff($expected, $recordSet);
 
-		Assert::true($diff->hasDifferentRecord());
+		self::assertTrue($diff->hasDifferentRecord());
 
 		$diffs = $diff->getDiffs();
 
-		Assert::count(5, $diffs);
-		Assert::type(DnsRecordDiff::class, $diffs[0]);
+		self::assertCount(5, $diffs);
+		self::assertInstanceOf(DnsRecordDiff::class, $diffs[0]);
 
 		$notDifferent = $diffs[0];
-		\assert($notDifferent instanceof DnsRecordDiff);
-		Assert::false($notDifferent->isDifferent());
-		Assert::same($this->getExpectedARecord(), $notDifferent->getExpectedRecord()->toArray());
+		self::assertInstanceOf(DnsRecordDiff::class, $notDifferent);
+		self::assertFalse($notDifferent->isDifferent());
+		self::assertSame($this->getExpectedARecord(), $notDifferent->getExpectedRecord()->toArray());
 
 		$different = $diffs[4];
-		\assert($different instanceof DnsRecordDiff);
-		Assert::true($different->isDifferent());
-		Assert::same($this->getExpectedAAAARecord(), $different->getExpectedRecord()->toArray());
-		Assert::count(0, $different->getSimilarRecords());
+		self::assertInstanceOf(DnsRecordDiff::class, $different);
+		self::assertTrue($different->isDifferent());
+		self::assertSame($this->getExpectedAAAARecord(), $different->getExpectedRecord()->toArray());
+		self::assertCount(0, $different->getSimilarRecords());
 
 		$differentMx = $diffs[3];
-		\assert($differentMx instanceof DnsRecordDiff);
-		Assert::true($differentMx->isDifferent());
-		Assert::same($this->getExpectedMxRecord(), $differentMx->getExpectedRecord()->toArray());
-		Assert::count(2, $differentMx->getSimilarRecords());
+		self::assertInstanceOf(DnsRecordDiff::class, $differentMx);
+		self::assertTrue($differentMx->isDifferent());
+		self::assertSame($this->getExpectedMxRecord(), $differentMx->getExpectedRecord()->toArray());
+		self::assertCount(2, $differentMx->getSimilarRecords());
 
 		$similarRecord = $differentMx->getSimilarRecords()[1];
-		\assert($similarRecord instanceof DnsRecord);
-		Assert::type(DnsRecord::class, $similarRecord);
-		Assert::same($this->getSimilarMxRecord(), $similarRecord->toArray());
+		self::assertInstanceOf(DnsRecord::class, $similarRecord);
+		self::assertInstanceOf(DnsRecord::class, $similarRecord);
+		self::assertSame($this->getSimilarMxRecord(), $similarRecord->toArray());
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	private function getExpectedARecord(): array
 	{
@@ -71,7 +65,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	private function getExpectedAAAARecord(): array
 	{
@@ -84,7 +78,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	private function getExpectedMxRecord(): array
 	{
@@ -97,7 +91,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	private function getSimilarMxRecord(): array
 	{
@@ -115,7 +109,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 
 		foreach ($this->getExpectedDnsRecords() as $record) {
 			$item = DnsRecord::fromPhpArray($record);
-			Assert::type(DnsRecord::class, $item);
+			self::assertInstanceOf(DnsRecord::class, $item);
 			$out[] = $item;
 		}
 
@@ -123,7 +117,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getExpectedDnsRecords(): array
 	{
@@ -138,7 +132,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 			[
 				'host' => 'example.com',
 				'class' => 'IN',
-				'ttl' => 52107,
+				'ttl' => 52_107,
 				'type' => 'NS',
 				'target' => 'ns3.example.com',
 			],
@@ -169,7 +163,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getDnsRecords(): array
 	{
@@ -184,7 +178,7 @@ class DnsRecordSetDiffTest extends BaseTestCase
 			[
 				'host' => 'example.com',
 				'class' => 'IN',
-				'ttl' => 52107,
+				'ttl' => 52_107,
 				'type' => 'NS',
 				'target' => 'ns3.example.com',
 			],
@@ -208,6 +202,3 @@ class DnsRecordSetDiffTest extends BaseTestCase
 	}
 
 }
-
-$test = new DnsRecordSetDiffTest();
-$test->run();

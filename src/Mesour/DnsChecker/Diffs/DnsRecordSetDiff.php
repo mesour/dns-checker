@@ -1,36 +1,32 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\IDnsRecord;
+use function assert;
+use function is_array;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class DnsRecordSetDiff
 {
 
-	/** @var DnsRecordDiff[] */
-	private $diffs;
+	/** @var array<DnsRecordDiff> */
+	private array $diffs;
 
 	/**
-	 * @param IDnsRecord[] $matches
+	 * @param array<IDnsRecord>|array<array<IDnsRecord>> $matches
 	 */
 	public function __construct(array $matches)
 	{
 		foreach ($matches as [$record, $match]) {
-			\assert($match instanceof IDnsRecord || \is_array($match));
-			$this->diffs[] = \is_array($match) ? new DnsRecordDiff($record, null, $match) : new DnsRecordDiff(
-				$record,
-				$match
-			);
+			assert($match instanceof IDnsRecord || is_array($match));
+			$this->diffs[] = is_array($match)
+				? new DnsRecordDiff($record, null, $match)
+				: new DnsRecordDiff($record, $match);
 		}
 	}
 
 	/**
-	 * @return DnsRecordDiff[]
+	 * @return array<DnsRecordDiff>
 	 */
 	public function getDiffs(): array
 	{

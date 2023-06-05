@@ -1,23 +1,16 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class MxRecord extends DnsRecord
 {
 
-	/** @var int|null */
-	private $priority;
+	private int|null $priority = null;
 
-	/** @var string */
-	private $target;
+	private string $target;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{
@@ -33,7 +26,7 @@ class MxRecord extends DnsRecord
 		parent::__construct($record['type'], $record['host'], $content, $record['ttl']);
 	}
 
-	public function getPriority(): ?int
+	public function getPriority(): int|null
 	{
 		return $this->priority;
 	}

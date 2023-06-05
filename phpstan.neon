@@ -1,17 +1,17 @@
 parameters:
-	autoload_directories:
-		- %rootDir%/../../../src
-		- %rootDir%/../../../tests
-
-	excludes_analyse:
+	level: 9
+	excludePaths:
 		- %rootDir%/../../../tests/bootstrap.php
-		- %rootDir%/../../../tests/environment.php
+
+	checkBenevolentUnionTypes: true
+	checkMissingCallableSignature: true
+	checkInternalClassCaseSensitivity: true
+	checkTooWideReturnTypesInProtectedAndPublicMethods: true
 
 	ignoreErrors:
 		- '#Parameter \#[0-9]+ \$[a-zA-Z0-9]+ of method Mesour\\DnsChecker\\DnsRecord::__construct\(\) expects (int|string), int\|string given\.#'
 		- '#Property .+ \((int|string)\) does not accept int\|string\.#'
 		- '#Parameter \#[0-9]+ \$[a-zA-Z0-9]+ of class [a-zA-Z0-9\\]+ constructor expects (int|string), int\|string given\.#'
-		- '#Method Mesour\\DnsChecker\\DnsRecordSet(.+) has .+ typehint specified\.#'
 
 	checkGenericClassInNonGenericObjectType: false
 	checkMissingIterableValueType: false

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsCheckerTests;
 
@@ -8,10 +6,6 @@ use Mesour\DnsChecker\AaaaDnsRecord;
 use Mesour\DnsChecker\DnsRecord;
 use Mesour\DnsChecker\DnsRecordType;
 use Mesour\DnsChecker\MxRecord;
-use Tester\Assert;
-
-require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/BaseTestCase.php';
 
 class DnsRecordSetTest extends BaseTestCase
 {
@@ -21,32 +15,32 @@ class DnsRecordSetTest extends BaseTestCase
 		$checker = $this->createChecker($this->getDnsRecords());
 		$records = $checker->getDnsRecordSet('example.com');
 
-		Assert::false($records->isEmpty());
-		Assert::count(6, $records);
+		self::assertFalse($records->isEmpty());
+		self::assertCount(6, $records);
 
 		$nsDnsRecord = new DnsRecord('NS', 'example.com', 'ns3.google.com');
-		Assert::true($records->hasRecord($nsDnsRecord));
+		self::assertTrue($records->hasRecord($nsDnsRecord));
 
 		$dnsRecord = new AaaaDnsRecord('AAAA', 'example.com', '2a00:1450:4014:800::200e');
-		Assert::true($records->hasRecord($dnsRecord));
+		self::assertTrue($records->hasRecord($dnsRecord));
 
 		$record = $records->getMatchingRecord($dnsRecord);
-		Assert::type(DnsRecord::class, $record);
-		Assert::same($this->getMatchingRecord(), $record->toArray());
+		self::assertInstanceOf(DnsRecord::class, $record);
+		self::assertSame($this->getMatchingRecord(), $record->toArray());
 
 		$notExistDnsRecord = new AaaaDnsRecord('AAAA', 'google.com', '1111:1450:5555:800::200e');
-		Assert::false($records->hasRecord($notExistDnsRecord));
+		self::assertFalse($records->hasRecord($notExistDnsRecord));
 
-		Assert::true($records->hasSameRecords([$nsDnsRecord, $dnsRecord]));
-		Assert::false($records->hasSameRecords([$nsDnsRecord, $notExistDnsRecord]));
+		self::assertTrue($records->hasSameRecords([$nsDnsRecord, $dnsRecord]));
+		self::assertFalse($records->hasSameRecords([$nsDnsRecord, $notExistDnsRecord]));
 
 		$byType = $records->getRecordsByType(DnsRecordType::MX);
-		Assert::count(2, $byType);
-		Assert::type(MxRecord::class, $byType[0]);
+		self::assertCount(2, $byType);
+		self::assertInstanceOf(MxRecord::class, $byType[0]);
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	private function getMatchingRecord(): array
 	{
@@ -59,7 +53,7 @@ class DnsRecordSetTest extends BaseTestCase
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getDnsRecords(): array
 	{
@@ -74,7 +68,7 @@ class DnsRecordSetTest extends BaseTestCase
 			[
 				'host' => 'google.com',
 				'class' => 'IN',
-				'ttl' => 52107,
+				'ttl' => 52_107,
 				'type' => 'NS',
 				'target' => 'ns3.google.com',
 			],
@@ -97,7 +91,7 @@ class DnsRecordSetTest extends BaseTestCase
 			[
 				'host' => 'google.com',
 				'class' => 'IN',
-				'ttl' => 86400,
+				'ttl' => 86_400,
 				'type' => 'HINFO',
 				'cpu' => 'CPU-type',
 				'os' => 'linux-os',
@@ -113,6 +107,3 @@ class DnsRecordSetTest extends BaseTestCase
 	}
 
 }
-
-$test = new DnsRecordSetTest();
-$test->run();

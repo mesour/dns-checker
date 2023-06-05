@@ -8,23 +8,27 @@
       "homepage": "http://mesour.com"
   }],
   "require": {
-      "php": ">=7.1",
+      "php": ">=8.0",
       "mesour/ip-addresses": "^0.2.0"
   },
   "require-dev": {
-      "tracy/tracy": "~2.3.0",
-      "slevomat/coding-standard": "^6.4",
-      "consistence/coding-standard": "^3.10",
-      "phpstan/phpstan": "^0.12.42",
-      "nette/tester": "^2.3",
-      "nette/bootstrap": "^2.4",
-      "nette/robot-loader": "^2.4",
-      "jakub-onderka/php-parallel-lint": "^1.0"
+      "tracy/tracy": "^2.9.0",
+      "orisai/coding-standard": "^3.7",
+      "phpstan/phpstan": "^1.10.0",
+      "phpstan/phpstan-deprecation-rules": "^1.1.0",
+      "grifart/phpstan-oneline": "^0.4.2",
+      "phpstan/phpstan-strict-rules": "^1.5",
+      "phpunit/phpunit": "^8.5",
+      "php-parallel-lint/php-parallel-lint": "^1.3.0",
+      "nette/di": "^3.1"
   },
   "suggest": {
-      "nette/bootstrap": "to use class DnsCheckerExtension"
+      "nette/di": "to use class DnsCheckerExtension"
   },
   "autoload": {
-      "classmap": ["src/"]
+    "psr-4": {
+      "Mesour\\": "src/Mesour",
+      "Mesour\\DnsCheckerTests\\": "tests/Mesour/DnsCheckerTests"
+    }
   }
 }

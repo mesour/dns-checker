@@ -1,38 +1,31 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\Providers;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
+use InvalidArgumentException;
+use function array_shift;
+use const DNS_ANY;
+
 class ArrayDnsRecordProvider implements IDnsRecordProvider
 {
 
-	/** @var string[][]|int[][] */
-	private $dnsArrayList;
-
 	/**
-	 * @param string[][]|int[][] $dnsArrayList
+	 * @param array<array<array<string>>>|array<array<array<int>>> $dnsArrayList
 	 */
-	public function __construct(array $dnsArrayList)
+	public function __construct(private array $dnsArrayList)
 	{
-		$this->dnsArrayList = $dnsArrayList;
 	}
 
 	/**
-	 * @param string $domain
-	 * @param int $type
-	 * @return string[][]|int[][]
+	 * @return array<array<string>>|array<array<int>>
 	 */
-	public function getDnsRecordArray(string $domain, int $type = \DNS_ANY): array
+	public function getDnsRecordArray(string $domain, int $type = DNS_ANY): array
 	{
 		if (!isset($this->dnsArrayList[0])) {
-			throw new \InvalidArgumentException('No remaining stored dns array to match.');
+			throw new InvalidArgumentException('No remaining stored dns array to match.');
 		}
 
-		return \array_shift($this->dnsArrayList);
+		return array_shift($this->dnsArrayList);
 	}
 
 }

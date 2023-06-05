@@ -1,23 +1,16 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class HInfoRecord extends DnsRecord
 {
 
-	/** @var string */
-	private $cpu;
+	private string $cpu;
 
-	/** @var string */
-	private $os;
+	private string $os;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{

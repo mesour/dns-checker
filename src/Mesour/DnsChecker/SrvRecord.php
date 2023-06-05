@@ -1,29 +1,20 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class SrvRecord extends DnsRecord
 {
 
-	/** @var int */
-	private $priority;
+	private int $priority;
 
-	/** @var int */
-	private $weight;
+	private int $weight;
 
-	/** @var int */
-	private $port;
+	private int $port;
 
-	/** @var string */
-	private $target;
+	private string $target;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{

@@ -1,31 +1,28 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
-class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
+use ArrayAccess;
+use Countable;
+use Iterator;
+use RuntimeException;
+use function array_merge;
+use function count;
+
+class DnsRecordSet implements Iterator, Countable, ArrayAccess
 {
 
-	/** @var IDnsRecord[] */
-	private $dnsRecords;
-
-	/** @var int */
-	private $position = 0;
+	private int $position = 0;
 
 	/**
-	 * @param IDnsRecord[] $dnsRecords
+	 * @param array<IDnsRecord> $dnsRecords
 	 */
-	public function __construct(array $dnsRecords)
+	public function __construct(private array $dnsRecords)
 	{
-		$this->dnsRecords = $dnsRecords;
 	}
 
 	/**
-	 * @return IDnsRecord[]
+	 * @return array<IDnsRecord>
 	 */
 	public function getRecords(): array
 	{
@@ -34,11 +31,11 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 
 	public function isEmpty(): bool
 	{
-		return \count($this->dnsRecords) === 0;
+		return count($this->dnsRecords) === 0;
 	}
 
 	/**
-	 * @return string[][]|int[][]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	public function toArray(): array
 	{
@@ -52,8 +49,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	}
 
 	/**
-	 * @param string $type
-	 * @return IDnsRecord[]
+	 * @return array<IDnsRecord>
 	 */
 	public function getRecordsByType(string $type): array
 	{
@@ -75,7 +71,7 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		return $this->getMatchingRecord($dnsRecord) !== null;
 	}
 
-	public function getMatchingRecord(IDnsRecord $checkedDnsRecord): ?IDnsRecord
+	public function getMatchingRecord(IDnsRecord $checkedDnsRecord): IDnsRecord|null
 	{
 		foreach ($this->dnsRecords as $dnsRecord) {
 			if ($this->areSame($dnsRecord, $checkedDnsRecord)) {
@@ -87,13 +83,12 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 	}
 
 	/**
-	 * @param IDnsRecord[] $checkedRecords
-	 * @return bool
+	 * @param array<IDnsRecord> $checkedRecords
 	 */
 	public function hasSameRecords(array $checkedRecords): bool
 	{
 		foreach ($this->dnsRecords as $dnsRecord) {
-			if (\count($checkedRecords) === 0) {
+			if (count($checkedRecords) === 0) {
 				break;
 			}
 
@@ -106,17 +101,17 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 			}
 		}
 
-		return \count($checkedRecords) === 0;
+		return count($checkedRecords) === 0;
 	}
 
-	public function merge(DnsRecordSet $dnsRecordSet): DnsRecordSet
+	public function merge(self $dnsRecordSet): self
 	{
-		return new DnsRecordSet(\array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
+		return new self(array_merge($this->getRecords(), $dnsRecordSet->getRecords()));
 	}
 
-	public function count()
+	public function count(): int
 	{
-		return \count($this->dnsRecords);
+		return count($this->dnsRecords);
 	}
 
 	public function rewind(): void
@@ -124,12 +119,12 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->position = 0;
 	}
 
-	public function current()
+	public function current(): IDnsRecord
 	{
 		return $this->dnsRecords[$this->position];
 	}
 
-	public function key()
+	public function key(): int
 	{
 		return $this->position;
 	}
@@ -139,29 +134,33 @@ class DnsRecordSet implements \Iterator, \Countable, \ArrayAccess
 		$this->position++;
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return isset($this->dnsRecords[$this->position]);
 	}
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return isset($this->dnsRecords[$offset]);
 	}
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): IDnsRecord
 	{
-		return $this->dnsRecords[$offset] ?? null;
+		if (!isset($this->dnsRecords[$offset])) {
+			throw new RuntimeException('Offset ' . $offset . ' not exists');
+		}
+
+		return $this->dnsRecords[$offset];
 	}
 
 	public function offsetSet($offset, $value): void
 	{
-		throw new \RuntimeException('DnsRecordSet is read only.');
+		throw new RuntimeException('DnsRecordSet is read only.');
 	}
 
 	public function offsetUnset($offset): void
 	{
-		throw new \RuntimeException('DnsRecordSet is read only.');
+		throw new RuntimeException('DnsRecordSet is read only.');
 	}
 
 	private function areSame(IDnsRecord $first, IDnsRecord $second): bool

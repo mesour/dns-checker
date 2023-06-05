@@ -1,39 +1,27 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
+use InvalidArgumentException;
+use RuntimeException;
+use function in_array;
+use function sprintf;
+use function strtoupper;
+
 class DnsRecord implements IDnsRecord
 {
 
-	/** @var string */
-	private $type;
+	private string $type;
 
-	/** @var string */
-	private $name;
-
-	/** @var string */
-	private $content;
-
-	/** @var int */
-	private $ttl;
-
-	public function __construct(string $type, string $name, string $content, int $ttl = 1800)
+	public function __construct(string $type, private string $name, private string $content, private int $ttl = 1_800)
 	{
-		$type = \strtoupper($type);
+		$type = strtoupper($type);
 
 		if (!DnsRecordType::isValid($type)) {
-			throw new \InvalidArgumentException('Invalid DNS row type');
+			throw new InvalidArgumentException('Invalid DNS row type');
 		}
 
 		$this->type = $type;
-		$this->name = $name;
-		$this->content = $content;
-		$this->ttl = $ttl;
 	}
 
 	public function getType(): string
@@ -57,7 +45,7 @@ class DnsRecord implements IDnsRecord
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	public function toArray(): array
 	{
@@ -70,8 +58,7 @@ class DnsRecord implements IDnsRecord
 	}
 
 	/**
-	 * @param string[]|int[] $record
-	 * @return IDnsRecord
+	 * @param array<string>|array<int> $record
 	 */
 	public static function fromPhpArray(array $record): IDnsRecord
 	{
@@ -81,7 +68,7 @@ class DnsRecord implements IDnsRecord
 			$content = $record['ip'];
 		} elseif ($type === DnsRecordType::AAAA) {
 			return new AaaaDnsRecord($type, $record['host'], $record['ipv6'], $record['ttl']);
-		} elseif (\in_array($type, [DnsRecordType::CNAME, DnsRecordType::NS, DnsRecordType::PTR], true)) {
+		} elseif (in_array($type, [DnsRecordType::CNAME, DnsRecordType::NS, DnsRecordType::PTR], true)) {
 			$content = $record['target'];
 		} elseif ($type === DnsRecordType::TXT) {
 			$content = $record['txt'];
@@ -98,7 +85,7 @@ class DnsRecord implements IDnsRecord
 		} elseif ($type === DnsRecordType::A6) {
 			return new A6Record($record);
 		} else {
-			throw new \RuntimeException(\sprintf('Dns record type %s is not implemented', $type));
+			throw new RuntimeException(sprintf('Dns record type %s is not implemented', $type));
 		}
 
 		return new self($type, $record['host'], $content, $record['ttl']);
