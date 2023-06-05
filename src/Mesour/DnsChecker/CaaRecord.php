@@ -1,26 +1,18 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class CaaRecord extends DnsRecord
 {
 
-	/** @var int */
-	private $flags;
+	private int $flags;
 
-	/** @var string */
-	private $tag;
+	private string $tag;
 
-	/** @var string */
-	private $value;
+	private string $value;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{

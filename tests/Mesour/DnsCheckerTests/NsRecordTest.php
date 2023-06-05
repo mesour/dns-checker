@@ -1,16 +1,10 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsCheckerTests;
 
 use Mesour\DnsChecker\DnsRecord;
-use Tester\Assert;
 
-require_once __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/BaseTestCase.php';
-
-class PtrRecordTest extends BaseTestCase
+class NsRecordTest extends BaseTestCase
 {
 
 	public function testDefault(): void
@@ -18,29 +12,29 @@ class PtrRecordTest extends BaseTestCase
 		$checker = $this->createChecker($this->getDnsRows());
 		$records = $checker->getDnsRecordSet('example.com');
 
-		Assert::false($records->isEmpty());
-		Assert::count(1, $records);
-		Assert::type(DnsRecord::class, $records[0]);
-		Assert::same($this->getExpectedRows(), $records->toArray());
+		self::assertFalse($records->isEmpty());
+		self::assertCount(1, $records);
+		self::assertInstanceOf(DnsRecord::class, $records[0]);
+		self::assertSame($this->getExpectedRows(), $records->toArray());
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getExpectedRows(): array
 	{
 		return [
 			[
-				'type' => 'PTR',
+				'type' => 'NS',
 				'name' => 'example.com',
 				'content' => 'test.example.com',
-				'ttl' => 300,
+				'ttl' => 900,
 			],
 		];
 	}
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<array<string>>|array<array<int>>
 	 */
 	private function getDnsRows(): array
 	{
@@ -48,14 +42,11 @@ class PtrRecordTest extends BaseTestCase
 			[
 				'host' => 'example.com',
 				'class' => 'IN',
-				'ttl' => 300,
-				'type' => 'PTR',
+				'ttl' => 900,
+				'type' => 'NS',
 				'target' => 'test.example.com',
 			],
 		];
 	}
 
 }
-
-$test = new PtrRecordTest();
-$test->run();

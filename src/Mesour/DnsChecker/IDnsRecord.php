@@ -1,12 +1,7 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 interface IDnsRecord
 {
 
@@ -19,7 +14,7 @@ interface IDnsRecord
 	public function getTtl(): int;
 
 	/**
-	 * @return string[]|int[]
+	 * @return array<string>|array<int>
 	 */
 	public function toArray(): array;
 

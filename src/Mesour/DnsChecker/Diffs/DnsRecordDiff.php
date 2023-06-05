@@ -1,36 +1,21 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\Diffs;
 
 use Mesour\DnsChecker\IDnsRecord;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class DnsRecordDiff
 {
 
-	/** @var IDnsRecord */
-	private $expected;
-
-	/** @var IDnsRecord|null */
-	private $actual;
-
-	/** @var IDnsRecord[] */
-	private $sameType;
-
 	/**
-	 * @param IDnsRecord $expected
-	 * @param IDnsRecord|null $actual
-	 * @param IDnsRecord[] $sameType
+	 * @param array<IDnsRecord> $sameType
 	 */
-	public function __construct(IDnsRecord $expected, ?IDnsRecord $actual = null, array $sameType = [])
+	public function __construct(
+		private IDnsRecord $expected,
+		private IDnsRecord|null $actual = null,
+		private array $sameType = [],
+	)
 	{
-		$this->expected = $expected;
-		$this->actual = $actual;
-		$this->sameType = $sameType;
 	}
 
 	public function isDifferent(): bool
@@ -43,13 +28,13 @@ class DnsRecordDiff
 		return $this->expected;
 	}
 
-	public function getActualRecord(): ?IDnsRecord
+	public function getActualRecord(): IDnsRecord|null
 	{
 		return $this->actual;
 	}
 
 	/**
-	 * @return IDnsRecord[]
+	 * @return array<IDnsRecord>
 	 */
 	public function getSimilarRecords(): array
 	{

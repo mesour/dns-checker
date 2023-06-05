@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\DI;
 
@@ -10,9 +8,6 @@ use Mesour\DnsChecker\Providers\DnsRecordProvider;
 use Mesour\DnsChecker\Providers\IDnsRecordProvider;
 use Nette\DI\CompilerExtension;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class DnsCheckerExtension extends CompilerExtension
 {
 

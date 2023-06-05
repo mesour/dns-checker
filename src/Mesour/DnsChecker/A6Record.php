@@ -1,26 +1,18 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class A6Record extends DnsRecord
 {
 
-	/** @var int */
-	private $masklen;
+	private int $masklen;
 
-	/** @var string */
-	private $ipV6;
+	private string $ipV6;
 
-	/** @var int|string */
-	private $chain;
+	private int|string $chain;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{
@@ -43,10 +35,7 @@ class A6Record extends DnsRecord
 		return $this->ipV6;
 	}
 
-	/**
-	 * @return int|string
-	 */
-	public function getChain()
+	public function getChain(): int|string
 	{
 		return $this->chain;
 	}

@@ -1,75 +1,17 @@
 <?xml version="1.0"?>
-<ruleset name="Mesour Coding Standard">
-    <rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml">
-        <!-- because of exceptions.php -->
-        <exclude name="Squiz.Classes.ClassFileName.NoMatch"/>
-        <exclude name="PSR1.Classes.ClassDeclaration.MultipleClasses"/>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <!-- Show only relevant part of path -->
+    <arg name="basepath" value="./"/>
 
-        <!-- because of "@param int" over "@param integer" -->
-        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+    <!-- Configure cache -->
+    <arg name="cache" value="./tests/tmp/cache.dat"/>
 
-        <!-- because of functions without visibility in interfaces -->
-        <exclude name="Squiz.Scope.MethodScope.Missing"/>
+    <!-- Import coding-standard -->
+    <rule ref="./vendor/orisai/coding-standard/src/ruleset-8.1.xml"/>
 
-        <!-- because of ") {" when arguments are on multiple lines -->
-        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
-
-        <!-- because of *.phpt -->
-        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
-
-        <!-- because of ::class -->
-        <exclude name="Squiz.Classes.SelfMemberReference.NotUsed"/>
-
-        <!-- because of $formControl->addCondition() -->
-        <exclude name="PEAR.WhiteSpace.ObjectOperatorIndent.Incorrect"/>
-
-        <exclude name="SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference"/>
-        <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostIncrementOperator"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison.RequiredYodaComparison"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses"/>
-        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall.MissingTrailingComma"/>
-        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName"/>
-        <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment.MultiLineDocComment"/>
-        <exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment.OneLinePropertyComment"/>
-        <exclude name="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax"/>
-        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator.DisallowedShortTernaryOperator"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
-
-        <!-- todo: this can be fixed for PHP 7.4+ -->
-        <exclude name="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator.RequiredNumericLiteralSeparator"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
+        <exclude name="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
     </rule>
-    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
-        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword"/>
-        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
-        <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces"/>
 
-        <!-- because of exceptions.php -->
-        <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName"/>
-
-        <!-- because of \DateTime, \Iterator etc. -->
-        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName"/>
-
-        <!-- because of @method annotations -->
-        <exclude name="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse"/>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
-        <properties>
-            <property name="searchAnnotations" type="boolean" value="true"/>
-        </properties>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
-        <properties>
-            <property name="allowFullyQualifiedExceptions" type="boolean" value="true"/>
-        </properties>
-    </rule>
-    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
-        <properties>
-            <property name="spacing" value="1"/>
-        </properties>
-    </rule>
-    <exclude-pattern>tests/environment.php</exclude-pattern>
     <exclude-pattern>tests/bootstrap.php</exclude-pattern>
 </ruleset>

@@ -1,20 +1,15 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker\Providers;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
+use const DNS_ANY;
+
 interface IDnsRecordProvider
 {
 
 	/**
-	 * @param string $domain
-	 * @param int $type
-	 * @return string[][]|int[][]
+	 * @return array<array<string>>|array<array<int>>
 	 */
-	public function getDnsRecordArray(string $domain, int $type = \DNS_ANY): array;
+	public function getDnsRecordArray(string $domain, int $type = DNS_ANY): array;
 
 }

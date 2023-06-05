@@ -1,38 +1,26 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Mesour\DnsChecker;
 
-/**
- * @author Matouš Němec <mesour.com>
- */
 class SoaRecord extends DnsRecord
 {
 
-	/** @var string */
-	private $mname;
+	private string $mname;
 
-	/** @var string */
-	private $rname;
+	private string $rname;
 
-	/** @var int */
-	private $serial;
+	private int $serial;
 
-	/** @var int */
-	private $refresh;
+	private int $refresh;
 
-	/** @var int */
-	private $retry;
+	private int $retry;
 
-	/** @var int */
-	private $expire;
+	private int $expire;
 
-	/** @var int */
-	private $minimumTtl;
+	private int $minimumTtl;
 
 	/**
-	 * @param string[]|int[] $record
+	 * @param array<string>|array<int> $record
 	 */
 	public function __construct(array $record)
 	{
