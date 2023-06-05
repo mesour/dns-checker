@@ -2,7 +2,7 @@
 /vendor
 /composer.lock
 /examples/log
-/tests/log
+!.gitkeep
 /tests/tmp
 /tests/environment.php
 /tests/Mesour/DnsCheckerTests/output
