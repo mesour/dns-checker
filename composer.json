@@ -25,6 +25,13 @@
   "suggest": {
       "nette/di": "to use class DnsCheckerExtension"
   },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "phpstan/extension-installer": true
+        }
+    },
   "autoload": {
     "psr-4": {
       "Mesour\\": "src/Mesour",
