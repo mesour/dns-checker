@@ -116,18 +116,6 @@ Assert::true($recordDiff->isDifferent());
 $recordDiff->getSimilarRecords();
 ```
 
-# Tests
-
-Run command `vendor/bin/tester tests/ -s -c tests/php.ini --colors`
-
-## PHP Stan
-
-Run command `vendor/bin/phpstan analyse -l 7 -c phpstan.neon src tests`
-
-## Code style
-
-Run command `vendor/bin/phpcs --standard=ruleset.xml --extensions=php,phpt --encoding=utf-8 --tab-width=4 -sp src tests`
-
 ## Mock DNS record provider
 
 For mock DNS provider your tests can use `Mesour\DnsChecker\StaticDnsRecordProvider` or `Mesour\DnsChecker\ArrayDnsRecordProvider`.
@@ -145,3 +133,25 @@ $provider = new \Mesour\DnsChecker\Providers\StaticDnsRecordProvider([
     ],
 ]);
 ```
+
+# Development
+
+Run command `make qa`
+
+## PhpUnit
+
+Run command `make phpunit`
+
+## PHP Stan
+
+Run command `make phpstan`
+
+## Code style
+
+Run command `make cs`
+
+Run command `make csf` for fix
+
+## Parallel lint
+
+Run command `make lint`

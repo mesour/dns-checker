@@ -9,7 +9,7 @@
   }],
   "require": {
       "php": ">=8.0",
-      "mesour/ip-addresses": "^0.2.0"
+      "mesour/ip-addresses": "^0.3.0"
   },
   "require-dev": {
       "tracy/tracy": "^2.9.0",
